@@ -44,7 +44,8 @@ void translation(int cell0, int cell1, int extra)
     if (extra == 1) {
                 ostr[pos] = '+';
                 pos++;
-        }
+    }
+ 
     ostr[pos] = '.';
     pos++;
     ostr[pos] = '\0';
@@ -70,14 +71,11 @@ int calculation(char c)
         }
     }   
 
-
-
     /* Second try if modulo result for range 10 to 2 does not equal 0 */
     /* It might be that the received dividend is a prime number, e.g. 97 for 'a' */
     
     /* TODO Checks missing! If first for loop passes with no problem,
-     * the loop below needs to be not ran unless a criteria is met. */
-    
+     * the loop below needs to be not ran unless a criteria is met. */    
         
     for (int i = 10; i > 1; i--) {
         if (dividend%i == 1) {
@@ -95,8 +93,7 @@ void char_parser(const char* istr, const size_t strlen)
 {
     for (int i = 0; i < strlen; i++)
         calculation(istr[i]);
-    /* Here, we should be able to call function for each iterator...
-       to work on character argument that has been converted into int. */
+    /* Call function every iteration */
 }
 
 int main(void)
