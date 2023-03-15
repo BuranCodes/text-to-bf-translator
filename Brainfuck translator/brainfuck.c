@@ -87,6 +87,7 @@ int calculation(char c)
 
         }
     }
+    return 0;
 }   
 
 void char_parser(const char* istr, const size_t strlen) 
