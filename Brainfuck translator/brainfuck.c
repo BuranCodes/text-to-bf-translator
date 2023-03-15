@@ -42,8 +42,8 @@ void translation(int cell0, int cell1, int extra)
     pos++;
 
     if (extra == 1) {
-                ostr[pos] = '+';
-                pos++;
+            ostr[pos] = '+';
+            pos++;
     }
  
     ostr[pos] = '.';
