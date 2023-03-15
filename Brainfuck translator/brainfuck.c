@@ -75,7 +75,7 @@ int calculation(char c)
     /* It might be that the received dividend is a prime number, e.g. 97 for 'a' */
     
     /* TODO Checks missing! If first for loop passes with no problem,
-     * the loop below needs to be not ran unless a criteria is met. */    
+     the loop below needs to be not ran unless a criteria is met. */    
         
     for (int i = 10; i > 1; i--) {
         if (dividend%i == 1) {
