@@ -92,7 +92,7 @@ int calculation(char c)
 
 void char_parser(const char* istr, const size_t strlen) 
 {
-    for (int i = 0; i < strlen; i++)
+    for (int i = 0; (size_t) i < strlen; i++)
         calculation(istr[i]);
     /* Call function every iteration */
 }
