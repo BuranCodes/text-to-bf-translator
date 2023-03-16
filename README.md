@@ -4,6 +4,6 @@ A console based translator that translates your input character/strings into Bra
 
 ## TODO:
 
-- [ ] Output to file as .bf or .txt!
-- [ ] Refactor, optimize the code!
+- [X] Output to file as .bf or .txt!
+- [X] Refactor, optimize the code!
 - [ ] Expand README!
