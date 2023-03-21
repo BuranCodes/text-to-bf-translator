@@ -9,7 +9,7 @@
 void translation(const char *istr, const size_t strlen, FILE *fp)
 {   
     char* ostr = NULL;
-    ostr = (char*)malloc(1024); /* Just enough to create Brainfuck code within limits */
+    ostr = (char*)malloc(2048); /* Just enough to create Brainfuck code within limits */
 
     char* beginloop = "[>"; // len 2
     char* endloop = "<-]>"; // len 4
@@ -44,7 +44,16 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
             }
         }
 
-        if (prevchar < (int) istr[i]) {
+        if (prevchar == (int) istr[i]) {
+            ostr[pos] = '>';
+            pos++;
+            ostr[pos] = '.';
+            pos++;
+            ostr[pos] = '<';
+            pos++;
+            ostr[pos] = '\0';
+            continue;
+        }
 
         for (int i = 0; i < cell0; i++) {
             ostr[pos] = '+';
@@ -56,6 +65,8 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
             pos++;
         }
 
+        if (prevchar < (int) istr[i]) {
+
         for (int i = 0; i < cell1; i++) {
             ostr[pos] = '+';
             pos++;
@@ -75,53 +86,34 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
             ostr[pos] = '<';
             pos++;
             ostr[pos] = '\0';
-
-
-        } else if (prevchar > (int) istr[i]) {
-
-            for (int i = 0; i < cell0; i++) {
-            ostr[pos] = '+';
-            pos++;
         }
 
-        for (int i = 0; i < 2; i++) { // beginloop
-            ostr[pos] = beginloop[i];
-            pos++;
-        }
+        else if (prevchar > (int) istr[i]) {
 
-        for (int i = 0; i < cell1; i++) {
-            ostr[pos] = '-';
-            pos++;
-        }
+            for (int i = 0; i < cell1; i++) {
+                ostr[pos] = '-';
+                pos++;
+            }
 
-        for (int i = 0; i < 4; i++) { // endloop
-            ostr[pos] = endloop[i];
-            pos++;
-        }
+            for (int i = 0; i < 4; i++) { // endloop
+                ostr[pos] = endloop[i];
+                pos++;
+            }
 
-        if (extra == 1) {
-            ostr[pos] = '-';
-            pos++;
-        }
-            ostr[pos] = '.';
-            pos++;
-            ostr[pos] = '<';
-            pos++;
-            ostr[pos] = '\0';
-            
+            if (extra == 1) {
+                ostr[pos] = '-';
+                pos++;
+            }
 
-        } else if (prevchar == (int) istr[i]) {
-            ostr[pos] = '>';
-            pos++;
             ostr[pos] = '.';
             pos++;
             ostr[pos] = '<';
             pos++;
             ostr[pos] = '\0';
         }
+        
 
         prevchar = (int) istr[i];
- 
 
     }
     fprintf(fp, "%s", ostr);
@@ -149,5 +141,3 @@ int main(void)
     fclose(fp);
     return 0;
 }
-
-
