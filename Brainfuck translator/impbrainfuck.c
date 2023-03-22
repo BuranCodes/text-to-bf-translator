@@ -14,8 +14,8 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
     char* beginloop = "[>"; // len 2
     char* endloop = "<-]>"; // len 4
 
-    static int pos = 0; /* track current position, used as an index */
-    static int prevchar = 0; /* keep track of previous vals for char */
+    int pos = 0; /* track current position, used as an index */
+    int prevchar = 0; /* keep track of previous vals for char */
     int dividend = 0, extra = 0, cell0 = 0, cell1 = 0;
 
     for (int i = 0; (size_t) i < strlen; i++) {
