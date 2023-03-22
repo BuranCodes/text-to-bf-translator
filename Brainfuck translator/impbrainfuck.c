@@ -9,7 +9,7 @@
 void translation(const char *istr, const size_t strlen, FILE *fp)
 {   
     char* ostr = NULL;
-    ostr = (char*)malloc(2048); /* Just enough to create Brainfuck code within limits */
+    ostr = (char*)malloc(10256); /* Just enough to create Brainfuck code within limits */
 
     char* beginloop = "[>"; // len 2
     char* endloop = "<-]>"; // len 4
@@ -20,9 +20,7 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
 
     for (int i = 0; (size_t) i < strlen; i++) {
 
-        if (prevchar == 0)
-            dividend = (int) istr[i];
-        else if (prevchar > (int) istr[i])
+        if (prevchar > (int) istr[i])
             dividend = prevchar - (int) istr[i];
         else if (prevchar < (int) istr[i])
             dividend = (int) istr[i] - prevchar;
@@ -77,9 +75,11 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
             pos++;
         }
 
-        if (extra == 1) {
+        if (extra > 0) {
+            for (int i = 0; i < extra; i++) {
             ostr[pos] = '+';
             pos++;
+            }
         }
             ostr[pos] = '.';
             pos++;
@@ -100,9 +100,11 @@ void translation(const char *istr, const size_t strlen, FILE *fp)
                 pos++;
             }
 
-            if (extra == 1) {
+            if (extra > 0) {
+                for (int i = 0; i < extra; i++) {
                 ostr[pos] = '-';
                 pos++;
+                }
             }
 
             ostr[pos] = '.';
