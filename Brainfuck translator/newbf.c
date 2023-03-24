@@ -1,0 +1,122 @@
+// Buran
+// String to Brainfuck translator, improved
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int translation (const char* istr)
+{
+    FILE *fp;
+    fp = fopen("output.bf", "w");
+    if (fp == NULL)
+        return 1;
+
+    char *ostr = NULL;
+    ostr = (char*) malloc (10256);
+    if (ostr == NULL)
+        return 1;
+
+    unsigned int ipos = 0, opos = 0, prevchar = 0;
+    int cell0, cell1, extra;
+
+    while(istr[ipos] != '\0') {
+
+        if (prevchar == (int) istr[ipos] && ipos > 0 && ostr[opos] == '.') { // print again
+            opos++;
+            ostr[opos] = '.';
+            ipos++;
+            continue;
+        } else if (prevchar == (int) istr[ipos] && ipos > 0 && ostr[opos] == '<') {
+            opos++;
+            ostr[opos] = '>';
+            opos++;
+            ostr[opos]= '.';
+            ipos++;
+            continue;
+        }
+        // calculation
+        int check;
+        for (int i = 10; i > 1; i--) { // first run
+            if (prevchar > (int) istr[ipos] && (prevchar-(int) istr[ipos])%i == 0) {
+                cell0 = (prevchar-(int) istr[ipos])/i;
+                cell1 = i;
+                extra = 0;
+                break;
+            } else if (prevchar < (int) istr[ipos] && (prevchar-(int) istr[ipos])%i == 0) {
+                cell0 = ((int) istr[ipos]-prevchar)/i;
+                cell1 = i;
+                extra = 0;
+                break;
+            }
+            else if (i == 2) {
+                check = 1;
+            }
+        }
+        if (check == 1) { // second run if true
+            for (int j = 10; j > 1; j--) {
+                if (prevchar > (int) istr[ipos] && (prevchar-(int) istr[ipos])%j == 1) {
+                    cell0 = (prevchar-(int) istr[ipos])/j;
+                    cell1 = j;
+                    extra = 1;
+                    break;
+                } else if (prevchar < (int) istr[ipos] && (prevchar-(int) istr[ipos])%j == 0) {
+                    cell0 = ((int) istr[ipos]-prevchar)/j;
+                    cell1 = j;
+                    extra = 0;
+                    break;
+                }
+            }
+        }
+        // writing to output string
+        // TODO: fix 
+        
+        opos++;
+        ostr[opos] = '<';
+        for (int i = 0; i < cell0; i++) {
+            opos++;
+            ostr[opos] = '+';
+        }
+        opos++;
+        ostr[opos] = '[';
+        opos++;
+        ostr[opos] = '>';
+        
+        if (prevchar > (int) istr[ipos]) {
+            for (int i = 0; i < cell1; i++) {
+                opos++;
+                ostr[opos] = '-';
+            }
+        }
+        
+
+    ipos++;
+    }
+    opos++;
+    ostr[opos] = '\0';
+
+    fprintf(fp, "%s", ostr);
+    fclose(fp);
+    free(ostr);
+
+    return 0;
+    
+}
+
+
+int main(void)
+{
+    char* istr = NULL;
+    istr = (char*)malloc(1024); /* 1023 characters with one NUL termination maximum */
+
+    puts("Enter a word or a sentence to translate into Brainfuck code!");
+    
+    scanf("%[^\n]", istr);
+    printf("Input string: %s\n", istr);
+
+    translation(istr);
+
+    puts("The string has been translated into Brainfuck code in output.bf\nThe file should be where you ran the executable.");
+
+    free(istr);
+    return 0;
+}
