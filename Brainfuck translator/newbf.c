@@ -16,24 +16,57 @@ int translation (const char* istr)
     if (ostr == NULL)
         return 1;
 
-    unsigned int ipos = 0, opos = 0, prevchar = 0;
-    int cell0, cell1, extra;
+    unsigned int ipos = 0, opos = 0;
+    char prevchar = istr[0];
+    // int cell0, cell1, extra;
 
-    while(istr[ipos] != '\0') {
+        LOOP:while(istr[ipos] != '\0') {
+        // check for same char and input char
 
-        if (prevchar == (int) istr[ipos] && ipos > 0 && ostr[opos] == '.') { // print again
+        if (prevchar == istr[ipos] && ostr[opos] == '.') { // print again
             opos++;
             ostr[opos] = '.';
             ipos++;
-            continue;
-        } else if (prevchar == (int) istr[ipos] && ipos > 0 && ostr[opos] == '<') {
+            goto LOOP;
+        } else if (prevchar == istr[ipos] && ostr[opos] == '<') {
             opos++;
             ostr[opos] = '>';
             opos++;
             ostr[opos]= '.';
             ipos++;
-            continue;
+            goto LOOP;
         }
+
+        // check distance between previous char and incoming char
+
+        if (prevchar- istr[ipos] < 13) {
+            if (ostr[opos] == '<') {
+                opos++;
+                ostr[opos] = '>';
+            }
+            for (char i = 0; i < prevchar-istr[ipos]; i++) {
+                opos++;
+                ostr[opos] = '-';
+            }
+            opos++;
+            ostr[opos] = '.';
+            ipos++;
+            goto LOOP;
+        } else if (istr[ipos]-prevchar < 13) {
+            if (ostr[opos] == '<') {
+                opos++;
+                ostr[opos] = '>';
+            }
+            for (char i = 0; i < prevchar-istr[ipos]; i++) {
+                opos++;
+                ostr[opos] = '+';
+            }
+            opos++;
+            ostr[opos] = '.';
+            ipos++;
+            goto LOOP;
+        }
+        /* 
         // calculation
         int check;
         for (int i = 10; i > 1; i--) { // first run
@@ -82,11 +115,11 @@ int translation (const char* istr)
         ostr[opos] = '>';
         
         if (prevchar > (int) istr[ipos]) {
-            for (int i = 0; i < cell1; i++) {
+            for (int i = 0  ; i < cell1; i++) {
                 opos++;
                 ostr[opos] = '-';
             }
-        }
+        } */
         
 
     ipos++;
