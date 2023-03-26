@@ -7,7 +7,7 @@
 int translation (const char* istr)
 {
     FILE *fp;
-    if ((fp = fopen("output.bf", "w")) == NULL)
+    if ((fp = fopen("test.bf", "w")) == NULL)
         goto ERROR;
 
     char *ostr = NULL;
@@ -19,21 +19,21 @@ int translation (const char* istr)
     char prevchar = istr[0];
     // int cell0, cell1, extra;
 
-    LOOP:while(istr[ipos] != '\0') {
+    while(istr[ipos] != '\0') {
         // check for same char and input char
 
         if (prevchar == istr[ipos] && ostr[opos] == '.') { // print again
             opos++;
             ostr[opos] = '.';
             ipos++;
-            goto LOOP;
+            continue;
         } else if (prevchar == istr[ipos] && ostr[opos] == '<') {
             opos++;
             ostr[opos] = '>';
             opos++;
             ostr[opos]= '.';
             ipos++;
-            goto LOOP;
+            continue;
         }
 
         // check distance between previous char and incoming char
@@ -49,8 +49,9 @@ int translation (const char* istr)
             }
             opos++;
             ostr[opos] = '.';
+            prevchar = istr[ipos];
             ipos++;
-            goto LOOP;
+            continue;
         } else if (istr[ipos]-prevchar < 13 && istr[ipos]-prevchar > 0) {
             if (ostr[opos] == '<') {
                 opos++;
@@ -62,8 +63,9 @@ int translation (const char* istr)
             }
             opos++;
             ostr[opos] = '.';
+            prevchar = istr[ipos];
             ipos++;
-            goto LOOP;
+            continue;
         }
         /* 
         // calculation
@@ -126,17 +128,16 @@ int translation (const char* istr)
     opos++;
     ostr[opos] = '\0';
 
-    END:
     fprintf(fp, "%s", ostr);
     fclose(fp);
     free(ostr);
     return 0;
+
     // will never fall through unless called by error checking routine
+
     ERROR:
     fprintf(stderr, "Memory error! Not enough memory...\n");
-    fclose(fp);
-    free(ostr);
-    return 1;
+    exit(1); 
 }
 
 
