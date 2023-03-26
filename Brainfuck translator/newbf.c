@@ -7,13 +7,11 @@
 int translation (const char* istr)
 {
     FILE *fp;
-    fp = fopen("output.bf", "w");
-    if (fp == NULL)
+    if ((fp = fopen("output.bf", "w")) == NULL)
         goto ERROR;
 
     char *ostr = NULL;
-    ostr = (char*) malloc (10256);
-    if (ostr == NULL)
+    if ((ostr = (char*) malloc (10256)) == NULL)
         goto ERROR;
 
     ostr[0] = '<';
@@ -133,9 +131,9 @@ int translation (const char* istr)
     fclose(fp);
     free(ostr);
     return 0;
-    
+    // will never fall through unless called by error checking routine
     ERROR:
-    fprintf(stderr, "Memory error!");
+    fprintf(stderr, "Memory error! Not enough memory...\n");
     fclose(fp);
     free(ostr);
     return 1;
