@@ -1,6 +1,6 @@
-# String To Brainf**k Code Translator
+# Text To Brainf**k Code Translator
 
-A console based translator that translates your input character/strings into Brainf**k code that will output the character/s in string inside a text file for you to run the code.
+A console based translator that translates your text you write in console into Brainf**k code that will output the said text inside a text file for you to run the code with interpreter.
 
 ## TODO:
 
