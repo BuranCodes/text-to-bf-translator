@@ -9,18 +9,19 @@ int translation (const char* istr)
     FILE *fp;
     fp = fopen("output.bf", "w");
     if (fp == NULL)
-        return 1;
+        goto ERROR;
 
     char *ostr = NULL;
     ostr = (char*) malloc (10256);
     if (ostr == NULL)
-        return 1;
+        goto ERROR;
 
+    ostr[0] = '<';
     unsigned int ipos = 0, opos = 0;
     char prevchar = istr[0];
     // int cell0, cell1, extra;
 
-        LOOP:while(istr[ipos] != '\0') {
+    LOOP:while(istr[ipos] != '\0') {
         // check for same char and input char
 
         if (prevchar == istr[ipos] && ostr[opos] == '.') { // print again
@@ -39,7 +40,7 @@ int translation (const char* istr)
 
         // check distance between previous char and incoming char
 
-        if (prevchar- istr[ipos] < 13) {
+        if (prevchar-istr[ipos] < 13 && prevchar-istr[ipos] > 0) {
             if (ostr[opos] == '<') {
                 opos++;
                 ostr[opos] = '>';
@@ -52,12 +53,12 @@ int translation (const char* istr)
             ostr[opos] = '.';
             ipos++;
             goto LOOP;
-        } else if (istr[ipos]-prevchar < 13) {
+        } else if (istr[ipos]-prevchar < 13 && istr[ipos]-prevchar > 0) {
             if (ostr[opos] == '<') {
                 opos++;
                 ostr[opos] = '>';
             }
-            for (char i = 0; i < prevchar-istr[ipos]; i++) {
+            for (char i = 0; i < istr[ipos]-prevchar; i++) {
                 opos++;
                 ostr[opos] = '+';
             }
@@ -127,12 +128,17 @@ int translation (const char* istr)
     opos++;
     ostr[opos] = '\0';
 
+    END:
     fprintf(fp, "%s", ostr);
     fclose(fp);
     free(ostr);
-
     return 0;
     
+    ERROR:
+    fprintf(stderr, "Memory error!");
+    fclose(fp);
+    free(ostr);
+    return 1;
 }
 
 
