@@ -169,8 +169,10 @@ int translation (const char* istr)
 int main(void)
 {
     char* istr = NULL;
-    istr = (char*)malloc(1024); /* 1023 characters with one NUL termination maximum */
-
+    if ((istr = (char*) malloc (1024)) == NULL) { /* 1023 characters with one NUL termination maximum */
+        fputs("Failed to allocate memory for input string.\n", stderr);
+        exit(MEM_ERR);
+    }
     puts("Enter a word or a sentence to translate into Brainfuck code!");
     
     scanf("%[^\n]", istr);
