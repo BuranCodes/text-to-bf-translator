@@ -4,23 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum {
-    FILE_ERR = 1,
-    MEM_ERR
-};
-
 int translation (const char* istr)
 {
     FILE *fp;
+    const unsigned int omemsize = 10256;
     if ((fp = fopen("output.bf", "w")) == NULL) {
         fputs("Cannot open/write to file. Make sure the executable has the permissions to do so.\n", stderr);
-        exit(FILE_ERR);
+        exit(EXIT_FAILURE);
     }
 
     char *ostr = NULL;
-    if ((ostr = (char*) malloc (10256)) == NULL) { // 10255 characters with one NUL termination maximum
+    if ((ostr = (char*) malloc (omemsize)) == NULL) { // 10255 characters with one NUL termination maximum
         fputs("Failed to allocate memory for output string.\n", stderr);
-        exit(MEM_ERR);
+        exit(EXIT_FAILURE);
     }
 
     unsigned int ipos = 0, opos = 0;
@@ -162,28 +158,28 @@ int translation (const char* istr)
     fprintf(fp, "%s", ostr);
     fclose(fp);
     free(ostr);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 
 int main(void)
 {
+    const unsigned int imemsize = 1024; 
     char* istr = NULL;
-    if ((istr = (char*) malloc (1024)) == NULL) { /* 1023 characters with one NUL termination maximum */
+    if ((istr = (char*) malloc (imemsize)) == NULL) { /* 1023 characters with one NUL termination maximum */
         fputs("Failed to allocate memory for input string.\n", stderr);
-        exit(MEM_ERR);
+        exit(EXIT_FAILURE);
     }
-    puts("Enter a word or a sentence to translate into Brainfuck code!");
-    
+    fputs("Enter a word or a sentence to translate into Brainfuck code!", stdout);
     scanf("%[^\n]", istr);
-    printf("Input string: %s\n", istr);
+    fprintf(stdout, "Input string: %s\n", istr);
 
     translation(istr);
 
-    puts("The string has been translated into Brainfuck code in output.bf\nThe file should be where you ran the executable.");
+    fputs("The string has been translated into Brainfuck code in output.bf\nThe file should be where you ran the executable.", stdout);
 
     free(istr);
-    return 0;
+    return EXIT_SUCCESS;
 }
 /* Keep in mind that you can manually change the amount of allocated memory if you wanted to. */
 /* 'malloc' can be found in both functions at start. */
