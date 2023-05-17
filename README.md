@@ -24,5 +24,4 @@ There are older algorithms in the folder that lack such one of the key features 
 
 Included in the code is error checking; if file or memory allocation fails, the program will notify you about it and then do `exit()`.
 
-
-#### Any contribution here is highly appreciated! 
+**Any contribution here is highly appreciated!**

@@ -54,3 +54,8 @@ dkms.conf
 # Output files
 *.bf
 *.json
+
+# Folders
+build
+test
+old code
