@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int translation (const char* istr)
+int translation (const char *istr)
 {
     FILE *fp;
     // change omemsize if you want to
@@ -24,7 +24,7 @@ int translation (const char* istr)
         exit(EXIT_FAILURE);
     }
 
-    if ((ostr = (char*)calloc(omemsize, sizeof(char))) == NULL) {
+    if ((ostr = (char *)calloc(omemsize, sizeof(char))) == NULL) {
         // 10255 characters with one NUL termination maximum
         fputs("Failed to allocate memory for output string.\n", stderr);
         exit(EXIT_FAILURE);
@@ -164,8 +164,8 @@ int main(void)
 {
     // change imemsize if you want to
     const unsigned int imemsize = 1024; 
-    char* istr = NULL;
-    if ((istr = (char*)calloc(imemsize, sizeof(char))) == NULL) { /* 1023 characters with one NUL termination maximum */
+    char *istr = NULL;
+    if ((istr = (char *)calloc(imemsize, sizeof(char))) == NULL) { /* 1023 characters with one NUL termination maximum */
         fputs("Failed to allocate memory for input string.\n", stderr);
         exit(EXIT_FAILURE);
     }
