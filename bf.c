@@ -10,7 +10,7 @@
 int translation (const char* istr)
 {
     FILE *fp;
-    // change here if you want to
+    // change omemsize if you want to
     const unsigned int omemsize = 10256;
     // they never go above 255, we can keep it that way
     unsigned int ipos = 0;
@@ -162,6 +162,7 @@ int translation (const char* istr)
 
 int main(void)
 {
+    // change imemsize if you want to
     const unsigned int imemsize = 1024; 
     char* istr = NULL;
     if ((istr = (char*)calloc(imemsize, sizeof(char))) == NULL) { /* 1023 characters with one NUL termination maximum */
