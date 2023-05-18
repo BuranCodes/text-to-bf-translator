@@ -54,6 +54,7 @@ dkms.conf
 # Output files
 *.bf
 *.json
+*.s
 
 # Folders
 build
