@@ -11,7 +11,7 @@ typedef unsigned char __uint8;
 
 int translation (const char *istr)
 {
-    __int32 ipos = 0;
+    int ipos = 0;
     /* they never go above 255, we can keep it that way */
     __uint8 prevchar = 0;
     __uint8 cell0, cell1, extra;
